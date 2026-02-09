@@ -139,29 +139,39 @@ Now automate publishing the Docker image to [GitHub Container Registry (ghcr.io)
 Modify the `docker` job so that it:
 
 1. Only pushes when on the `main` branch (use an `if` condition on the push step or use `push: ${{ github.ref == 'refs/heads/main' }}` in the build-push action)
-2. Logs in to `ghcr.io` using `docker/login-action@v3` with:
+2. Adds `permissions` to the `docker` job so that it can push packages and check out code:
+   ```yaml
+   permissions:
+     contents: read
+     packages: write
+   ```
+3. Logs in to `ghcr.io` using `docker/login-action@v3` with:
    - `registry: ghcr.io`
    - `username: ${{ github.actor }}`
    - `password: ${{ secrets.GITHUB_TOKEN }}`
-3. Tags the image as `ghcr.io/<your-github-username>/assignment-3:latest`
-4. Pushes the image to the registry (set `push: true` when on main)
+4. Tags the image as `ghcr.io/${{ github.repository }}:latest` (using `github.repository` ensures the tag matches the repository owner, whether that is your personal account or a GitHub Classroom organization)
+5. Pushes the image to the registry (set `push: true` when on main)
 
 > **Note:** `GITHUB_TOKEN` is automatically provided by GitHub Actions -- you do not need to create this secret manually.
+
+> **Note:** If your repository lives under a GitHub organization (e.g. GitHub Classroom), the org must allow GitHub Actions to create packages. An org admin can enable this under **Organization Settings → Actions → General → Workflow permissions** — select **"Read and write permissions"**.
 
 **4b. Make the package public**
 
 After the workflow has pushed the image successfully:
 
-1. Go to your GitHub profile -> **Packages**
-2. Find the `assignment-3` package
-3. Go to **Package settings** and change the visibility to **Public**
+1. Go to your repository on GitHub
+2. Find the package in the **Packages** section in the right sidebar of your repository page
+3. Click on the package, then go to **Package settings** and change the visibility to **Public**
+
+> **Tip:** If your repository is under a GitHub Classroom organization, the package will appear under the **organization's** packages, not your personal profile. You can also find it via the repository's sidebar.
 
 **4c. Verify the published image**
 
-Pull and run the image from another machine (or after removing the local image):
+Pull and run the image from another machine (or after removing the local image). Replace `<owner>/<repo>` with your full repository path (e.g. `my-username/assignment-3` or `My-Org/assignment-3-my-username`):
 
 ```bash
-docker run -p 3000:3000 ghcr.io/<your-github-username>/assignment-3:latest
+docker run -p 3000:3000 ghcr.io/<owner>/<repo>:latest
 ```
 
 **Commit your changes with a descriptive message.**
