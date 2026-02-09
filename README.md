@@ -195,13 +195,12 @@ Rebuild the image and compare the new size to the old one. The slim image should
 
 ## Handin
 
-1. Add me (arnif) as a collaborator to your GitHub repository
-2. Ensure you have at least **5 commits** (one per task)
-3. Verify the following before submitting:
+1. Ensure you have at least **5 commits** (one per task)
+2. Verify the following before submitting:
    - The CI workflow runs tests and linter successfully (green checkmark)
    - The Docker image is built and pushed by the CI pipeline
    - The published Docker image on ghcr.io is **public** and can be pulled
-4. Submit the GitHub repository link to Canvas
+3. Submit the GitHub repository link to Canvas
 
 ## Tips
 
