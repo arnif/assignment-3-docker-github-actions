@@ -132,7 +132,7 @@ Push your changes and check the Actions tab. You should now see two jobs in the 
 
 ### Task 4: Publish the Docker Image to GitHub Container Registry (Commit 4)
 
-Now automate publishing the Docker image to [GitHub Container Registry (ghcr.io)](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) so that anyone can pull and run your app.
+Now automate publishing the Docker image to [GitHub Container Registry (ghcr.io)](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
 
 **4a. Update the `docker` job**
 
@@ -156,23 +156,13 @@ Modify the `docker` job so that it:
 
 > **Note:** If your repository lives under a GitHub organization (e.g. GitHub Classroom), the org must allow GitHub Actions to create packages. An org admin can enable this under **Organization Settings → Actions → General → Workflow permissions** — select **"Read and write permissions"**.
 
-**4b. Make the package public**
+**4b. Verify the published image**
 
 After the workflow has pushed the image successfully:
 
 1. Go to your repository on GitHub
 2. Find the package in the **Packages** section in the right sidebar of your repository page
-3. Click on the package, then go to **Package settings** and change the visibility to **Public**
-
-> **Tip:** If your repository is under a GitHub Classroom organization, the package will appear under the **organization's** packages, not your personal profile. You can also find it via the repository's sidebar.
-
-**4c. Verify the published image**
-
-Pull and run the image from another machine (or after removing the local image). Replace `<owner>/<repo>` with your full repository path (e.g. `my-username/assignment-3` or `My-Org/assignment-3-my-username`):
-
-```bash
-docker run -p 3000:3000 ghcr.io/<owner>/<repo>:latest
-```
+3. Click on the package and verify that the image has been pushed with the `latest` tag
 
 **Commit your changes with a descriptive message.**
 
@@ -209,7 +199,7 @@ Rebuild the image and compare the new size to the old one. The slim image should
 2. Verify the following before submitting:
    - The CI workflow runs tests and linter successfully (green checkmark)
    - The Docker image is built and pushed by the CI pipeline
-   - The published Docker image on ghcr.io is **public** and can be pulled
+   - The Docker image is published to ghcr.io and visible in the repository's Packages sidebar
 3. Submit the GitHub repository link to Canvas
 
 ## Tips
